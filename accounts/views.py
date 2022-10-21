@@ -22,7 +22,3 @@ def signup(request):
         'form':form
     }
     return render(request,'accounts/signup.html',context)
-
-def login(request):
-    if request.method == 'POST':
-        form = AuthentionForm
