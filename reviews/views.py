@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
 from .models import Review
 from .forms import ReviewForm
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def create(request):
     if request.method == 'POST':
         data = ReviewForm(request.POST)
@@ -27,3 +29,19 @@ def detail(request, pk):
         'review':review
     }
     return render(request, 'reviews/detail.html',context)
+
+def update(request,pk):
+    db_data = Review.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        data = ReviewForm(request.POST, instance=db_data)
+
+        if data.is_valid():
+            data.save()
+
+            return redirect('reviews:index')
+
+    else:
+        data = ReviewForm(instance=db_data)
+
+    return render(request, 'reviews/create.html', {'data': data})
