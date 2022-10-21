@@ -19,15 +19,15 @@
   </thead>
   <tbody class="table-group-divider">
     <!-- 넘겨받은 페이지 객체만큼 반복한다. -->
-    {% for i in review %}
+    {% for reviews in review %}
     <tr>
-      <td class="fw-bold"><a href="">{{ i.user }}</a></td>
-      <td>{{ i.title }}</td>
-      <td>{{ i.content }}</td>
-      <td>{{ i.movie_name }}</td>
-      <td>{{ i.grade }}</td>
-      <td>{{ i.created_at }}</td>
-      <td>{{ i.updated_at }}</td>
+      <td class="fw-bold"><a href="{% url 'reviews:detail' reviews.pk %}">{{ reviews.user }}</a></td>
+      <td>{{ reviews.title }}</td>
+      <td>{{ reviews.content }}</td>
+      <td>{{ reviews.movie_name }}</td>
+      <td>{{ reviews.grade }}</td>
+      <td>{{ reviews.created_at }}</td>
+      <td>{{ reviews.updated_at }}</td>
     </tr>
     {% endfor %} 
   </tbody>

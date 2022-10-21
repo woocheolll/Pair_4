@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block content %}
+<a href="{% url 'reviews:index' %}">목록으로</a>
+<h1>{{ review.pk }}번 게시글</h1>
+<p>{{ review.user }}</p>
+<p>{{ review.title }}</p>
+<p>{{ review.content }}</p>
+<p>{{ review.movie_name }}</p>
+<p>{{ review.created_at }}</p>
+<p>{{ review.updated_at }}</p>
+<a href="">수정하기</a>
+<a href="">삭제하기</a>
+{% endblock %}
