@@ -4,7 +4,8 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% block content %}
-<a href="{% url 'reviews:index' %}">목록으로</a>
+<div class="p-3" style="border: 2px solid;">
+
 <h1>{{ review.pk }}번 게시글</h1>
 <p>작성자 : {{ review.user }}</p>
 <p>제목 : {{ review.title }}</p>
@@ -12,27 +13,41 @@
 <p>영화 : {{ review.movie_name }}</p>
 <p>작성시간 : {{ review.created_at }}</p>
 <p>수정시간 : {{ review.updated_at }}</p>
-<a href="{% url 'reviews:update' review.pk %}">수정하기</a>
-<a href="{% url 'reviews:delete' review.pk %}">삭제하기</a>
+<div class="position-relative">
+  <div class="position-absolute bottom-50 end-0">
+    
+  </div>
+</div>
+<div class="d-flex justify-content-end">
+
+    <a class='mx-3 btn btn-success' href="{% url 'reviews:update' review.pk %}">수정하기</a>
+    <a class='btn btn-danger' href="{% url 'reviews:delete' review.pk %}">삭제하기</a>
+</div>
+</div>
 
 {% comment %} 댓글 {% endcomment %}
 {% if request.user.is_authenticated %} 
-<h4>댓글</h4>
+
+<h4 class="mt-5">댓글</h4>
 {% if comments %}
 <p >{{ comments.count }}개 </p>
 {% endif %}
 
 {% if request.user.is_authenticated %}
-<form action="{% url 'reviews:comment_create' review.pk %}" method='POST'>
+<form action="{% url 'reviews:comment_create' review.pk %}"  method='POST'>
     {% csrf_token %}
-    {% bootstrap_form comment_form layout='inline' %}
-    <input type="submit" value='작성' class='btn btn-success'>
+    <textarea class="form-control" name="content" rows="5"></textarea>
+    <div class='input-group '>
+        <input class='btn btn-primary' type="submit" value='작성'>
+    </div>
+
 </form>
+<br>
 {% endif %}
 {% endif %}
 {% for comment in comments %}
 {% if request.user == comment.user %}
-<a href="{% url 'reviews:comment_delete' review.pk comment.pk %}" class='btn btn-danger float-end'>삭제</a>
+<a href="{% url 'reviews:comment_delete' review.pk comment.pk %}" class='mt-3 btn btn-danger float-end'>삭제</a>
 {% endif %}
   <div class=''>
     <p > {{ comment.user.username}}님 </p>

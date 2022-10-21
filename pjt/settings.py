@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'imagekit',
     'reviews',
     'accounts',
     'django_bootstrap5',
@@ -128,3 +129,8 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL='accounts.user'
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+#이미지 사용
+MEDIA_ROOT = BASE_DIR / 'images'
+MEDIA_URL = '/media/'

@@ -12,15 +12,14 @@
     <title>Document</title>
   </head>
   <style>
-  #footer {
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:70px;   
+    #footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 70px;
 
-  }
+    }
   </style>
-  
 
   <body>
     <nav class="navbar navbar-expand-lg bg-light">
@@ -55,12 +54,13 @@
     <div class="container p-5">
       {% block content %}{% endblock %}
     </div>
-    <div id ='footer'>
-    <footer class="p-3 bg-dark text-white text-center">
-      <p> django Reviews PJT, by 박태호 신우철</p>
-    </footer>
-  </div>
-    
+    <div id='footer'>
+      <footer class="p-3 bg-dark text-white text-center">
+        <p>
+          django Reviews PJT, by 박태호 신우철</p>
+      </footer>
+    </div>
+
   </body>
 
 </html>

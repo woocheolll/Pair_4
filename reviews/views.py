@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from .models import Review,Comment
 from .forms import CommentForm, ReviewForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 @login_required
 def create(request):
@@ -19,8 +20,12 @@ def create(request):
 
 def index(request):
     review = Review.objects.all().order_by('-pk')
+    page = request.GET.get('page') #GET 방식으로 정보를 받아오는 데이터
+    paginator = Paginator(review, '5') #Paginator(분할될 객체, 페이지 당 담길 객체수)
+    page_obj = paginator.get_page(page) #페이지 번호를 받아 해당 페이지를 리턴 get_page 권장
     context = {
-        'review':review
+        'review':review,
+        'page': page_obj,
     }
     return render(request,'reviews/index.html',context)
 
@@ -51,7 +56,7 @@ def comment_create(request,pk):
 
 def comment_delete(request,pk,comment_pk):
     comment = Comment.objects.get(pk = comment_pk)
-    if request.user == comment.user:
+    if request.user == comment.user: 
         comment.delete()
     return redirect('reviews:detail',pk)
 
