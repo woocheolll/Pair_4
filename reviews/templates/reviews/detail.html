@@ -14,7 +14,6 @@
 <p>수정시간 : {{ review.updated_at }}</p>
 <a href="{% url 'reviews:update' review.pk %}">수정하기</a>
 <a href="{% url 'reviews:delete' review.pk %}">삭제하기</a>
-
 {% comment %} 댓글 {% endcomment %}
 {% if request.user.is_authenticated %} 
 <h4>댓글</h4>
@@ -25,8 +24,10 @@
 {% if request.user.is_authenticated %}
 <form action="{% url 'reviews:comment_create' review.pk %}" method='POST'>
     {% csrf_token %}
-    {% bootstrap_form comment_form layout='inline' %}
-    <input type="submit" value='작성' class='btn btn-success'>
+  <div class="input-group mb-3">
+    <textarea name="content" id="content" rows="2" col="20"></textarea>
+    <input type="submit" value="작성">
+  </div>
 </form>
 {% endif %}
 {% endif %}
