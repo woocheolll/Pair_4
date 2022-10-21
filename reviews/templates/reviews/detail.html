@@ -13,5 +13,5 @@
 <p>{{ review.created_at }}</p>
 <p>{{ review.updated_at }}</p>
 <a href="{% url 'reviews:update' review.pk %}">수정하기</a>
-<a href="">삭제하기</a>
+<a href="{% url 'reviews:delete' review.pk %}">삭제하기</a>
 {% endblock %}
