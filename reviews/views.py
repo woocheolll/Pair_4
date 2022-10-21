@@ -45,3 +45,9 @@ def update(request,pk):
         data = ReviewForm(instance=db_data)
 
     return render(request, 'reviews/create.html', {'data': data})
+
+def delete(request, pk):
+    review = Review.objects.get(pk=pk)
+    review.delete()
+
+    return redirect('reviews:index')
