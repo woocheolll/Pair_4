@@ -6,14 +6,14 @@
 {% block content %}
 <a href="{% url 'reviews:index' %}">목록으로</a>
 <h1>{{ review.pk }}번 게시글</h1>
-<p>{{ review.user }}</p>
-<p>{{ review.title }}</p>
-<p>{{ review.content }}</p>
-<p>{{ review.movie_name }}</p>
-<p>{{ review.created_at }}</p>
-<p>{{ review.updated_at }}</p>
-<a href="">수정하기</a>
-<a href="">삭제하기</a>
+<p>작성자 : {{ review.user }}</p>
+<p>제목 : {{ review.title }}</p>
+<p>내용 : {{ review.content }}</p>
+<p>영화 : {{ review.movie_name }}</p>
+<p>작성시간 : {{ review.created_at }}</p>
+<p>수정시간 : {{ review.updated_at }}</p>
+<a href="{% url 'reviews:update' review.pk %}">수정하기</a>
+<a href="{% url 'reviews:delete' review.pk %}">삭제하기</a>
 
 {% comment %} 댓글 {% endcomment %}
 {% if request.user.is_authenticated %} 

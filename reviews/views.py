@@ -2,7 +2,9 @@
 from django.shortcuts import render,redirect
 from .models import Review,Comment
 from .forms import CommentForm, ReviewForm
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def create(request):
     if request.method == 'POST':
         data = ReviewForm(request.POST)
@@ -33,6 +35,7 @@ def detail(request, pk):
     }
     return render(request, 'reviews/detail.html',context)
 
+
 def comment_create(request,pk):
     review = Review.objects.get(pk=pk)
     comment_form = CommentForm(request.POST)
@@ -51,3 +54,26 @@ def comment_delete(request,pk,comment_pk):
     if request.user == comment.user:
         comment.delete()
     return redirect('reviews:detail',pk)
+
+def update(request,pk):
+    db_data = Review.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        data = ReviewForm(request.POST, instance=db_data)
+
+        if data.is_valid():
+            data.save()
+
+            return redirect('reviews:index')
+
+    else:
+        data = ReviewForm(instance=db_data)
+
+    return render(request, 'reviews/create.html', {'data': data})
+
+def delete(request, pk):
+    review = Review.objects.get(pk=pk)
+    review.delete()
+
+    return redirect('reviews:index')
+
