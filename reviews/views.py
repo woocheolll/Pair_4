@@ -1,6 +1,7 @@
+
 from django.shortcuts import render,redirect
-from .models import Review
-from .forms import ReviewForm
+from .models import Review,Comment
+from .forms import CommentForm, ReviewForm
 
 def create(request):
     if request.method == 'POST':
@@ -23,7 +24,30 @@ def index(request):
 
 def detail(request, pk):
     review = Review.objects.get(pk=pk)
+    comment_form = CommentForm()
+     
     context = {
-        'review':review
+        'review':review,
+        'comment_form':comment_form,
+        'comments': review.comment_set.all(),
     }
     return render(request, 'reviews/detail.html',context)
+
+def comment_create(request,pk):
+    review = Review.objects.get(pk=pk)
+    comment_form = CommentForm(request.POST)
+    print(comment_form,request.POST)
+    if comment_form.is_valid():
+        
+        comment = comment_form.save(commit=False)
+        comment.review = review
+        comment.user = request.user
+        comment.save()
+    return redirect('reviews:detail', review.pk)
+
+
+def comment_delete(request,pk,comment_pk):
+    comment = Comment.objects.get(pk = comment_pk)
+    if request.user == comment.user:
+        comment.delete()
+    return redirect('reviews:detail',pk)
